@@ -6,18 +6,26 @@ class ResultsScreen extends StatelessWidget {
 
   final Color _startColor = const Color(0xFF48006D);
   final Color _endColor = const Color(0xFF050067);
+  final int _totalQuestions = 10;
 
   @override
   Widget build(BuildContext context) {
+    // Retrieve the user's name and final score
+    final String userName = UserData.userName;
+    final int score = UserData.score;
+
+    // Construct the result message
+    final String resultMessage = '$userName you scored $score/$_totalQuestions.';
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Quiz Results'),
-        backgroundColor: _startColor,
-      ),
+      // Remove AppBar to prevent the default back button
+      // appBar: AppBar(title: const Text('Results')),
+
       body: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
+          // Gradient Background
           gradient: LinearGradient(
             colors: [_startColor, _endColor],
             begin: Alignment.topLeft,
@@ -25,37 +33,61 @@ class ResultsScreen extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Congratulations, ${UserData.userName ?? 'User'}!',
-                style: const TextStyle(
-                  fontSize: 28,
-                  color: Colors.white,
-                  fontFamily: 'DoHyeon',
+          child: Padding(
+            padding: const EdgeInsets.all(40.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min, // Ensure column doesn't take full height if unnecessary
+              children: [
+                // 1. Result Message
+                Text(
+                  resultMessage,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontFamily: 'DoHyeon',
+                    fontSize: 32,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    height: 1.5,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black45,
+                        blurRadius: 5,
+                        offset: Offset(2, 2),
+                      ),
+                    ],
+                  ),
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'You scored: ${UserData.score} / 10',
-                style: const TextStyle(
-                  fontSize: 36,
-                  color: Colors.white,
-                  fontFamily: 'DoHyeon',
-                  fontWeight: FontWeight.bold,
+
+                const SizedBox(height: 60),
+
+                // 2. The requested "Continue" button
+                ElevatedButton(
+                  onPressed: () {
+                    // FIX: Use popUntil to remove all intermediate screens
+                    // and return to the very first route on the stack (which is usually the Home Screen).
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: _endColor, // Dark text color
+                    backgroundColor: Colors.white, // White background for contrast
+                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 10,
+                    shadowColor: Colors.purple.shade700,
+                  ),
+                  child: const Text(
+                    'Continue to Home',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: () {
-                  // Navigate back to the Home Screen or Registration
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                },
-                child: const Text('Go Home'),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
