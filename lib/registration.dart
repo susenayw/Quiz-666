@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'quiz.dart'; // Import the QuizScreen
+import 'quiz.dart';
 
-// Global Data Class to hold user information temporarily
 class UserData {
   static String userName = '';
   static int score = 0;
@@ -17,24 +16,19 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> with SingleTickerProviderStateMixin {
-  // Define the colors
-  final Color _startColor = const Color(0xFF48006D); // Dark Purple
-  final Color _endColor = const Color(0xFF050067);   // Dark Blue
-  final Color _buttonColor = const Color(0xFF2600FF); // Bright Blue (#2600FF)
-  final Color _hintColor = const Color(0xFF8A8A8A);   // Gray (#8A8A8A)
-  final Color _inputBackground = Colors.black;        // Black input background
+  final Color _startColor = const Color(0xFF48006D);
+  final Color _endColor = const Color(0xFF050067);
+  final Color _buttonColor = const Color(0xFF2600FF);
+  final Color _hintColor = const Color(0xFF8A8A8A);
+  final Color _inputBackground = Colors.black;
 
-  // Controller for the animation sequence
   late AnimationController _controller;
 
-  // Animation for the "Please enter your name" text (Fades in over 0.0 - 0.4 interval)
   late Animation<double> _textOpacityAnimation;
 
-  // Animation for the Name Input and Confirm Button (Slides and Fades in over 0.4 - 1.0 interval)
   late Animation<double> _formOpacityAnimation;
   late Animation<Offset> _formSlideAnimation;
 
-  // Text Controller for the input field
   final TextEditingController _nameController = TextEditingController();
 
 
@@ -42,13 +36,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> with SingleTick
   void initState() {
     super.initState();
 
-    // The entire animation sequence duration
     _controller = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
-    )..forward(); // Start the animation immediately
+    )..forward();
 
-    // Stage 1: Text Fade In (0.0 to 0.4 interval)
     _textOpacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
@@ -56,7 +48,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> with SingleTick
       ),
     );
 
-    // Stage 2: Form/Button Fade In (0.4 to 1.0 interval)
     _formOpacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
@@ -64,10 +55,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> with SingleTick
       ),
     );
 
-    // Stage 2: Form/Button Slide Up (0.4 to 1.0 interval)
     _formSlideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.1), // Starts slightly lower than final position
-      end: Offset.zero,           // Ends at final position
+      begin: const Offset(0, 0.1),
+      end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: const Interval(0.4, 1.0, curve: Curves.easeOut),
@@ -84,13 +74,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> with SingleTick
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // AppBar is intentionally left out to match the Figma prototype (no navigation bar)
 
       body: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          // Gradient Background
           gradient: LinearGradient(
             colors: [_startColor, _endColor],
             begin: Alignment.topLeft,
@@ -103,7 +91,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> with SingleTick
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Stage 1: "Please enter your name" Text
               FadeTransition(
                 opacity: _textOpacityAnimation,
                 child: Text(
@@ -118,17 +105,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> with SingleTick
 
               const SizedBox(height: 30),
 
-              // Stage 2: Input Field and Button Container
               SlideTransition(
                 position: _formSlideAnimation,
                 child: FadeTransition(
                   opacity: _formOpacityAnimation,
                   child: Column(
                     children: [
-                      // Name Input Field
                       TextField(
                         controller: _nameController,
-                        autofocus: true, // Automatically opens keyboard (Stage 3)
+                        autofocus: true,
                         style: const TextStyle(color: Colors.white, fontFamily: 'DoHyeon', fontSize: 18),
                         cursorColor: _buttonColor,
                         decoration: InputDecoration(
@@ -136,7 +121,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> with SingleTick
                           hintStyle: TextStyle(color: _hintColor, fontFamily: 'DoHyeon'),
                           filled: true,
                           fillColor: _inputBackground,
-                          // No borders for a clean look
                           border: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -146,18 +130,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> with SingleTick
 
                       const SizedBox(height: 30),
 
-                      // Confirm Button
                       SizedBox(
                         width: double.infinity,
                         height: 60,
                         child: ElevatedButton(
-                          // ⭐ UPDATED: Save name and navigate to QuizScreen
                           onPressed: () {
                             if (_nameController.text.isNotEmpty) {
-                              // 1. Save the name to the static class
                               UserData.userName = _nameController.text.trim();
 
-                              // 2. Navigate to the Quiz Page
                               Navigator.of(context).push(
                                 MaterialPageRoute(builder: (context) => const QuizScreen()),
                               );

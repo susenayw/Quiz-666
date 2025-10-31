@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'registration.dart'; // Import the RegistrationScreen
+import 'registration.dart';
 
 // --- HOME SCREEN ---
 
@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  // Define the colors
+  // Colors
   final Color _startColor = const Color(0xFF48006D);
   final Color _endColor = const Color(0xFF050067);
   final Color _buttonColor = const Color(0xFF2600FF);
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // AppBar with title "Quiz 666"
+      // AppBar
       appBar: AppBar(
         title: const Text(
           'Quiz 666',
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
         child: Stack(
           children: [
-            // Centered "Are You Ready?" Text
+
             Center(
               child: Text(
                 'Are You Ready?',
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ),
             ),
 
-            // Animated Start Button at the Bottom
+            // Start Button
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(

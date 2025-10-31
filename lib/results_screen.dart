@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'registration.dart'; // To access UserData
+import 'registration.dart';
 
 class ResultsScreen extends StatelessWidget {
   const ResultsScreen({super.key});
@@ -10,22 +10,17 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve the user's name and final score
     final String userName = UserData.userName;
     final int score = UserData.score;
 
-    // Construct the result message
     final String resultMessage = '$userName you scored $score/$_totalQuestions.';
 
     return Scaffold(
-      // Remove AppBar to prevent the default back button
-      // appBar: AppBar(title: const Text('Results')),
 
       body: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          // Gradient Background
           gradient: LinearGradient(
             colors: [_startColor, _endColor],
             begin: Alignment.topLeft,
@@ -37,9 +32,8 @@ class ResultsScreen extends StatelessWidget {
             padding: const EdgeInsets.all(40.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min, // Ensure column doesn't take full height if unnecessary
+              mainAxisSize: MainAxisSize.min,
               children: [
-                // 1. Result Message
                 Text(
                   resultMessage,
                   textAlign: TextAlign.center,
@@ -61,16 +55,14 @@ class ResultsScreen extends StatelessWidget {
 
                 const SizedBox(height: 60),
 
-                // 2. The requested "Continue" button
                 ElevatedButton(
                   onPressed: () {
-                    // FIX: Use popUntil to remove all intermediate screens
-                    // and return to the very first route on the stack (which is usually the Home Screen).
+
                     Navigator.popUntil(context, (route) => route.isFirst);
                   },
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: _endColor, // Dark text color
-                    backgroundColor: Colors.white, // White background for contrast
+                    foregroundColor: _endColor,
+                    backgroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

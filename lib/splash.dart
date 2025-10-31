@@ -11,7 +11,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
-  // Define the gradient colors based on your request (48006D and 050067)
   final Color _startColor = const Color(0xFF48006D);
   final Color _endColor = const Color(0xFF050067);
   final Duration _totalDuration = const Duration(seconds: 4);
@@ -26,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void initState() {
     super.initState();
 
-    // 1. Initialize Gradient Animation (runs for 2 seconds)
     _gradientController = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
@@ -40,7 +38,6 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       end: _endColor,
     ).animate(_gradientController);
 
-    // 2. Initialize Logo Animation (3 seconds total)
     _logoController = AnimationController(
       duration: _totalDuration - const Duration(seconds: 1),
       vsync: this,
@@ -52,12 +49,10 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       ),
     );
 
-    // Start the sequence
     _gradientController.forward().then((_) {
       _logoController.forward();
     });
 
-    // Navigate to the next screen after the full total duration
     Future.delayed(_totalDuration, () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const HomeScreen()),
@@ -101,7 +96,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                   ),
                   padding: const EdgeInsets.all(20),
                   child: Image.asset(
-                    'assets/images/logo-quiz-666.png', // Correct asset path
+                    'assets/images/logo-quiz-666.png',
                     fit: BoxFit.contain,
                   ),
                 ),

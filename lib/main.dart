@@ -4,7 +4,6 @@ import 'splash.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  // Force the app to stay in portrait mode
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -21,12 +20,11 @@ class MyApp extends StatelessWidget {
       title: 'Quiz 666 App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // Set DoHyeon as the default font family for the entire app
+        // DoHyeon Font
         fontFamily: 'DoHyeon',
         primarySwatch: Colors.deepPurple,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      // Start the app with the SplashScreen
       home: const SplashScreen(),
     );
   }
