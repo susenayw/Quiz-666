@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'quiz.dart'; // Import the QuizScreen
+
+// Global Data Class to hold user information temporarily
+class UserData {
+  static String userName = '';
+  static int score = 0;
+}
 
 // --- REGISTRATION SCREEN ---
 
@@ -144,13 +151,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> with SingleTick
                         width: double.infinity,
                         height: 60,
                         child: ElevatedButton(
+                          // ⭐ UPDATED: Save name and navigate to QuizScreen
                           onPressed: () {
-                            // Only proceed if the name is not empty
                             if (_nameController.text.isNotEmpty) {
-                              // TODO: Navigate to the Quiz Page, passing the name
-                              print('Confirmed name: ${_nameController.text}');
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Welcome, ${_nameController.text}!')),
+                              // 1. Save the name to the static class
+                              UserData.userName = _nameController.text.trim();
+
+                              // 2. Navigate to the Quiz Page
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => const QuizScreen()),
                               );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(

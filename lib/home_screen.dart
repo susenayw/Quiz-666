@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'registration.dart'; // ⭐ ADDED: Import the RegistrationScreen
+import 'registration.dart'; // Import the RegistrationScreen
 
 // --- HOME SCREEN ---
 
@@ -11,12 +11,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  // Define the colors from the splash screen
-  final Color _startColor = const Color(0xFF48006D); // Dark Purple
-  final Color _endColor = const Color(0xFF050067);   // Dark Blue
-  final Color _buttonColor = const Color(0xFF2600FF); // Bright Blue (#2600FF)
+  // Define the colors
+  final Color _startColor = const Color(0xFF48006D);
+  final Color _endColor = const Color(0xFF050067);
+  final Color _buttonColor = const Color(0xFF2600FF);
 
-  // Controller for the button animation
   late AnimationController _buttonController;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _opacityAnimation;
@@ -25,22 +24,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   void initState() {
     super.initState();
 
-    // Initialize Controller for the slide-in/fade-in animation
     _buttonController = AnimationController(
-      duration: const Duration(milliseconds: 800), // Animation duration
+      duration: const Duration(milliseconds: 800),
       vsync: this,
     );
 
-    // Slide Animation: Button starts from below the screen and slides up
     _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 1), // Start 100% off-screen below
-      end: Offset.zero,          // End at its normal position
+      begin: const Offset(0, 1),
+      end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _buttonController,
       curve: Curves.easeOut,
     ));
 
-    // Opacity Animation: Button fades in
     _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _buttonController,
@@ -48,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       ),
     );
 
-    // Start the animation when the screen is loaded
     _buttonController.forward();
   }
 
@@ -61,21 +56,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // The AppBar has a gradient-matching color and the title
+      // AppBar with title "Quiz 666"
       appBar: AppBar(
         title: const Text(
           'Quiz 666',
-          // The DoHyeon font is applied here via the MaterialApp theme
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         backgroundColor: _startColor,
-        elevation: 0, // Remove shadow
+        elevation: 0,
       ),
 
-      // The Body must have the gradient background
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -112,19 +105,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 40.0), // Space from the bottom edge
-
-                // Apply the slide-up and fade-in animations
+                padding: const EdgeInsets.only(bottom: 40.0),
                 child: SlideTransition(
                   position: _slideAnimation,
                   child: FadeTransition(
                     opacity: _opacityAnimation,
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.85, // 85% width
+                      width: MediaQuery.of(context).size.width * 0.85,
                       height: 60,
                       child: ElevatedButton(
                         onPressed: () {
-                          // ⭐ CHANGED: Navigation to the RegistrationScreen
+                          // Navigate to the RegistrationScreen
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => const RegistrationScreen()),
                           );
@@ -133,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           backgroundColor: _buttonColor,
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30), // Highly rounded corners
+                            borderRadius: BorderRadius.circular(30),
                           ),
                           elevation: 10,
                           textStyle: const TextStyle(

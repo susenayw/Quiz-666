@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'splash.dart'; // Import the splash screen
-// Note: HomeScreen is imported by splash.dart, but we'll import it here too if needed later.
+import 'splash.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  // Force the app to stay in portrait mode
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
       title: 'Quiz 666 App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'DoHyeon', // Set the custom font
+        // Set DoHyeon as the default font family for the entire app
+        fontFamily: 'DoHyeon',
         primarySwatch: Colors.deepPurple,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
