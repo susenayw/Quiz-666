@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'registration.dart'; // ⭐ ADDED: Import the RegistrationScreen
 
 // --- HOME SCREEN ---
 
@@ -123,9 +124,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       height: 60,
                       child: ElevatedButton(
                         onPressed: () {
-                          // TODO: Implement navigation to the next screen (e.g., Registration)
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Start Button Pressed!')),
+                          // ⭐ CHANGED: Navigation to the RegistrationScreen
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => const RegistrationScreen()),
                           );
                         },
                         style: ElevatedButton.styleFrom(
